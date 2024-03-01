@@ -1,10 +1,15 @@
+from dotenv import load_dotenv
+import os
 from PIL import Image
 import pytesseract
 import google.generativeai as genai
 from IPython.display import Markdown 
 import textwrap
 
-apiKey = "AIzaSyDLzDcz_h9JAOFmJmOufB0YGVLYCQW27ZM"
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
+
+apiKey=os.getenv("GEMINI_API_KEY")
 
 genai.configure(api_key=apiKey)
 
