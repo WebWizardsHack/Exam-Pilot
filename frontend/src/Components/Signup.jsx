@@ -31,6 +31,7 @@ export default function Signup() {
         email:${user.email}
         password:${user.password}
         `)
+        navigate("/home")
     }
   return (
       <>
@@ -81,7 +82,7 @@ export default function Signup() {
                       
                   </div>
               </form>
-              <div className='flex justify-center gap-5 my-6 '>
+              <div className='flex justify-center gap-5 my-11 '>
                       <button className=' p-4 shadow-lg rounded-full'>
                           <img src="./assets/gmail_logo.png" className=' w-6' alt="" />
                       </button>
