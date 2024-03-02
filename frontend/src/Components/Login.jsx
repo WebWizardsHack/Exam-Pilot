@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 export default function Login() {
+
+    const navigate=useNavigate()
+
+
 
     let [user, setUser] = useState({
         email: "",
@@ -24,6 +28,8 @@ export default function Login() {
         email:${user.email}
         password:${user.password}
         `)
+
+        navigate("/home")
     }
 
   return (
@@ -37,18 +43,18 @@ export default function Login() {
               <form className='px-6' onSubmit={setData} >
                   <div className='flex flex-col mt-4'>
                       <label htmlFor="email" className=' font-semibold text-lg'>Email</label>
-                      <input type="text" className=' border-b-2 outline-none px-2 my-2 focus:border-gray-500' name='email' placeholder='Your email id' onChange={getdata} />
+                      <input required type="text" className=' border-b-2 outline-none px-2 my-2 focus:border-gray-500' name='email' placeholder='Your email id' onChange={getdata} />
                   </div>
                   <div className='flex flex-col mt-4'>
                       <label htmlFor="password" className=' font-semibold text-lg'>Password</label>
-                      <input type="password" className=' border-b-2 outline-none px-2 my-2  focus:border-gray-500' name="password" placeholder='password' onChange={getdata} />
+                      <input required type="password" className=' border-b-2 outline-none px-2 my-2  focus:border-gray-500' name="password" placeholder='password' onChange={getdata} />
                       <h1 className='text-right text-sm'>Forget Password?</h1>
                   </div>
-                      
                       <button className='text-white font-bold bg-cyan-800 w-[100%] mt-6 py-3 rounded-full  '>
-                          Login
+                  
+                           Login
+                      
                       </button>
-                    
                   
                 
                   <div className='mt-3'>
