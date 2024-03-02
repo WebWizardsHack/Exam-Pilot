@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "express": "^4.18.3"
+    "bcrypt": "^5.1.1",
+    "connect-flash": "^0.1.1",
+    "express": "^4.18.3",
+    "passport-local-mongoose": "^8.0.0"
   }
 }
