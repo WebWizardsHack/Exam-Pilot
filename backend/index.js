@@ -8,6 +8,7 @@ const passport=require("passport");
 const localStrategy = require("passport-local").Strategy;
 const mongoose=require("mongoose");
 const flash=require("connect-flash");
+const cors=require("cors");
 
 const userRouter = require("./routes/users");
 
@@ -25,6 +26,8 @@ async function main(){
     await mongoose.connect(mongoUrl);
 }
 
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(flash());
 

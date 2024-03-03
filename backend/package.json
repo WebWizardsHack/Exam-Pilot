@@ -2,6 +2,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "connect-flash": "^0.1.1",
+    "cors": "^2.8.5",
     "express": "^4.18.3",
     "passport-local-mongoose": "^8.0.0"
   }
