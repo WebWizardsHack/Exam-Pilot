@@ -1,5 +1,4 @@
 const User =require("../models/users");
-const bcrypt= require("bcrypt");
 
 module.exports.signUp = async (req,res) =>{
     let  { name , email , password , contact , username } = req.body;
