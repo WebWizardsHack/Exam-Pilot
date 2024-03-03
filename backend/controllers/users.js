@@ -3,6 +3,8 @@ const User =require("../models/users");
 module.exports.signUp = async (req,res) =>{
     let  { name , email , password , contact , username } = req.body;
 
+    console.log(req.body);
+
     if (!name || !email || !contact || !password || !username) {
         return res.status(400).json({ message: 'Please fill in all fields' });
     }
