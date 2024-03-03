@@ -33,30 +33,30 @@ module.exports.signUp = async (req,res) =>{
         req.login(registeredUser , (err) =>{
             if(err){
                 console.log(err);
-                res.status(400).json({ message: 'Error saving the user' });
+                return res.status(400).json({ message: 'Error saving the user' });
             }
             else{
-                res.status(201).json({ message: 'User created successfully' });
+                return res.status(200).json({ message: 'User created successfully' });
             }
         });
 
     } catch (error) {
         console.log(error);
-        res.status(400).json({ message: 'Error registering user' });
+        return res.status(400).json({ message: 'Error registering user' });
     }
 
 }
 
 
 module.exports.login = (req,res) => {
-    res.status(200).json({ message: 'Login successful!' });
+    return res.status(200).json({ message: 'Login successful!' });
 }
 
 module.exports.logout = (req,res) => {
     req.logout( (err) =>{
         if(err){
             console.error(err);
-            return res.status(500).json({ message: 'Error logging out' });
+            return res.status(400).json({ message: 'Error logging out' });
         }
         res.status(200).json({ message: 'Logged out successfully' });
     });
