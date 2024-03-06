@@ -30,6 +30,10 @@ const questionsSchema = new mongoose.Schema({
             optD :{
                 type : String, 
                 required: true,
+            },
+            ans: {
+                type: String,
+                required: true,
             }
         }
     ]

@@ -28,11 +28,10 @@ module.exports.generateQuestions = async (req, res) => {
 
             temp = temp.trim();
 
-            temp = temp.replace(`**Q${cnt}`, "").replace(`**Q.`, "").replace("**A.", "").replace("**B.", "").replace("**C.", "").replace("**D.", "");
-
+            temp = temp.replace(`**Q${cnt}`, "").replace(`**Q.`, "").replace("**A.", "").replace("**B.", "").replace("**C.", "").replace("**D.", "").replace("**Ans.","").replace("**Ans","").replace(`**Ans${cnt}.`,"").replace(`**Ans${cnt}`,"");
 
             if (!q) {
-                questionArray[i] = { question: temp, optA: "", optB: "", optC: "", optD: "" };
+                questionArray[i] = { question: temp, optA: "", optB: "", optC: "", optD: "" , ans: ""};
                 q = true;
             } else if (!a) {
                 questionArray[i].optA = temp;
@@ -43,20 +42,30 @@ module.exports.generateQuestions = async (req, res) => {
             } else if (!c) {
                 questionArray[i].optC = temp;
                 c = true;
-            } else {
+            } else if(!d) {
                 questionArray[i].optD = temp;
+                d=true;
+            }else{
+                for(let j=0;j<temp.length;j++){
+                    if(temp[j]=='A' || temp[j]=='B' || temp[j]== 'C' || temp[j]== 'D'){
+                        questionArray[i].ans=temp[j];
+                    }
+                }
                 q = false;
                 a = false;
                 b = false;
                 c = false;
+                d = false;
                 cnt++;
                 i++;
             }
         
             idx++;
         }
+
+        // console.log(questionArray);
         
-         const newQuestions = new Questions({
+        const newQuestions = new Questions({
             timeAlloted: timeAlloted,
             scheduledTime: scheduledTime,
             questions: questionArray,
