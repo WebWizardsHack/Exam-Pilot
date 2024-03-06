@@ -1,3 +1,4 @@
+require('dotenv').config({ path: "../.env" });
 const express = require('express');
 
 const app = express();
@@ -11,9 +12,11 @@ const flash=require("connect-flash");
 const cors=require("cors");
 
 const userRouter = require("./routes/users");
+const questionRouter=require("./routes/questions");
 
 const User=require("./models/users");
 
+// const apiKey = process.env.GEMINI_API_KEY; 
 const mongoUrl="mongodb://127.0.0.1:27017/Exam-Pilot";
 
 main().then(()=>{
@@ -61,6 +64,7 @@ app.use((err, req, res, next) => {
   }
 });
 
+app.use("/dashboard",questionRouter);
 app.use("/",userRouter);
 
 app.get("/",(req,res) => {
