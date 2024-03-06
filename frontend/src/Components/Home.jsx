@@ -1,12 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-<<<<<<< HEAD
-
-export default function Home() {
-    const navigate=useNavigate()
-    function logout() {
-        navigate("/")
-=======
 import axios from "axios"
 
 export default function Home() {
@@ -31,7 +24,6 @@ export default function Home() {
                 alert('Error setting up the request: ' + error.message);
             }
         }
->>>>>>> Usaid
     }
   return (
       <>

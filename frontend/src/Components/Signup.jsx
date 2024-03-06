@@ -1,16 +1,9 @@
 import React, { useState } from 'react'
-<<<<<<< HEAD
-import { Link } from 'react-router-dom'
-
-export default function Signup() {
-
-=======
 import { Link , useNavigate } from 'react-router-dom'
 import axios from "axios"
 
 export default function Signup() {
     const navigate=useNavigate();
->>>>>>> Usaid
     let [user, setUser] = useState({
         name: "",
         userName: "",
@@ -18,11 +11,7 @@ export default function Signup() {
         contact: "",
        password:"" 
     })
-<<<<<<< HEAD
-
-=======
     
->>>>>>> Usaid
     function getdata(e) {
         let name = e.target.name
         let value = e.target.value 
@@ -34,18 +23,6 @@ export default function Signup() {
         })
     }
 
-<<<<<<< HEAD
-    function setData(e) {
-        e.preventDefault()
-        alert(`
-        name:${user.name}
-        username:${user.userName}
-        contact:${user.contact}
-        email:${user.email}
-        password:${user.password}
-        `)
-        navigate("/home")
-=======
     async function setData(e) {
         e.preventDefault()
         try {
@@ -67,7 +44,6 @@ export default function Signup() {
                 alert('Error setting up the request: ' + error.message);
             }
         }
->>>>>>> Usaid
     }
   return (
       <>
