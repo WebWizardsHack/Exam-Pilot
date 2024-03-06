@@ -3,13 +3,13 @@ import os
 from PIL import Image
 import pytesseract
 import google.generativeai as genai
-from IPython.display import Markdown 
+from IPython.display import Markdown
 import textwrap
 
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
 load_dotenv(dotenv_path)
 
-apiKey=os.getenv("GEMINI_API_KEY")
+apiKey = os.getenv("GEMINI_API_KEY")
 
 genai.configure(api_key=apiKey)
 
@@ -20,34 +20,42 @@ def to_markdown(text):
   return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
 def extract_text_from_image(image_path):
-    image = Image.open(image_path)
-    text = pytesseract.image_to_string(image)
-    return text
+    try:
+        image = Image.open(image_path)
+        text = pytesseract.image_to_string(image)
+        return text
+    except Exception as e:
+        print(f"Error extracting text from image: {e}")
+        return None  # Return None on error
 
 def generate_questions_using_gemini(prompt):
     model = genai.GenerativeModel('gemini-pro')
 
     try:
         response = model.generate_content(prompt)
-        print("API Request Successful")
-        print("Response Text:", response.text)
+        # print("API Request Successful")
         return to_markdown(response.text)
     except Exception as e:
         print("API Request Failed")
-        print("Error:", e)
-        return "Error generating questions"
-
-   
+        print(f"Error: {e}")
+        print(f"Prompt: {prompt}")  # Log the prompt for debugging
+        return "Error generating question"
 
 if __name__ == '__main__':
-    syllabus_image_path = "./syll.png"
-    question_paper_image_path = "./mcq.png"
+    # syllabus_image = sys.argv[1]
 
-    syllabus_text = extract_text_from_image(syllabus_image_path)
-    question_paper_text = extract_text_from_image(question_paper_image_path)
+    # numberOfQuestions = sys.argv[2]
 
-    prompt = f"Generate a random question paper based on the given syllabus:\n\n{syllabus_text}\n\nThe format and the number of questions of the generated question paper should exactly be the format like this sample paper:\n{question_paper_text} "
+    syllabus_image = "./syll.png"
+    numberOfQuestions = 15
+
+    syllabus_text = extract_text_from_image(syllabus_image)
+
+    prompt = f"Generate a random Multiple Choice Question paper of {numberOfQuestions} questions with 4 options A,B,C,D each based on the given syllabus:\n\n{syllabus_text} \n\n The format of the MCQs should be like this \n Each Question should start with letter 'Q.' and each option A,B,C,D should be in separate lines"
+
+    # print(prompt)
 
     generated_questions = generate_questions_using_gemini(prompt)
 
     print(generated_questions)
+
