@@ -62,8 +62,6 @@ module.exports.generateQuestions = async (req, res) => {
         
             idx++;
         }
-
-        // console.log(questionArray);
         
         const newQuestions = new Questions({
             timeAlloted: timeAlloted,

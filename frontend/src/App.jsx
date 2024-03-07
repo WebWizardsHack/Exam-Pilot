@@ -3,6 +3,7 @@ import './App.css'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
 import Home from './Components/Home'
+import TeacherDasboard from './Components/TeacherDasboard'
 
 function App() {
   return (
@@ -12,11 +13,11 @@ function App() {
           <Route path='/' element={<Login/> } />
           <Route path='/signup' element={<Signup/> } />
           <Route path='/home' element={<Home/> } />
+          <Route path='/teacher-dashboard' element={<TeacherDasboard/> } />
       </Routes>
       </BrowserRouter>
     </>
   )
-
 }
 
 export default App
