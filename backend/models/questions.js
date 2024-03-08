@@ -1,6 +1,14 @@
 const mongoose= require("mongoose");
 
 const questionsSchema = new mongoose.Schema({
+    Name: {
+        type : String,
+        required : true,
+    },
+    requestId : {
+        type : String,
+        required : true,
+    },
     timeAlloted : {
         type : Number,
         required : true,

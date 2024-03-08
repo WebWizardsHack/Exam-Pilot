@@ -6,6 +6,8 @@ module.exports.generateQuestions = async (req, res) => {
         const numQuestions = req.body.numQuestions;
         const timeAlloted = req.body.timeAlloted;
         const scheduledTime = req.body.scheduledTime;
+        const requestId = req.body.requestId;
+        const Name = req.body.Name;
 
         const imagePath = req.file.path;
 
@@ -64,6 +66,8 @@ module.exports.generateQuestions = async (req, res) => {
         }
         
         const newQuestions = new Questions({
+            requestId : requestId,
+            Name : Name,
             timeAlloted: timeAlloted,
             scheduledTime: scheduledTime,
             questions: questionArray,
@@ -78,3 +82,14 @@ module.exports.generateQuestions = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+module.exports.fetchQuestions = async (req,res) => {
+    try {
+        const { requestId } = req.body;
+        const questions = await Questions.findOne({requestId});
+        if(questions) res.status(200).json({message : "Questions fetched successfully" , questions});
+        else res.status(500).json({message:"Error in fetching questions from database with the corresponding request id"});
+    } catch (error) {
+        res.status(500).json({message:"Error in fetching questions" , error});
+    }
+}
