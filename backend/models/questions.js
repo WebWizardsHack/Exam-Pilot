@@ -9,13 +9,17 @@ const questionsSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    timeAlloted : {
+    timeAllotted : {
         type : Number,
         required : true,
     },
     scheduledTime : {
         type :Date,
         required : true,
+    },
+    numQuestions : {
+        type: Number,
+        required: true,
     },
     questions: [
         {

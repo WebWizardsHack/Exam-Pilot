@@ -4,7 +4,7 @@ const  generateRandomQuestions  = require("../ai_module/AI");
 module.exports.generateQuestions = async (req, res) => {
     try {
         const numQuestions = req.body.numQuestions;
-        const timeAlloted = req.body.timeAlloted;
+        const timeAllotted = req.body.timeAllotted;
         const scheduledTime = req.body.scheduledTime;
         const requestId = req.body.requestId;
         const Name = req.body.Name;
@@ -68,9 +68,10 @@ module.exports.generateQuestions = async (req, res) => {
         const newQuestions = new Questions({
             requestId : requestId,
             Name : Name,
-            timeAlloted: timeAlloted,
+            timeAllotted: timeAllotted,
             scheduledTime: scheduledTime,
             questions: questionArray,
+            numQuestions: numQuestions,
         });
 
         await newQuestions.save();
@@ -87,9 +88,13 @@ module.exports.fetchQuestions = async (req,res) => {
     try {
         const { requestId } = req.body;
         const questions = await Questions.findOne({requestId});
-        if(questions) res.status(200).json({message : "Questions fetched successfully" , questions});
-        else res.status(500).json({message:"Error in fetching questions from database with the corresponding request id"});
-    } catch (error) {
+        if(questions){
+            res.status(200).json({message : "Questions fetched successfully" , questions});
+        }
+        else {
+            res.status(500).json({message:"Error in fetching questions from database with the corresponding request id"});
+        }
+    } catch (error){
         res.status(500).json({message:"Error in fetching questions" , error});
     }
 }
