@@ -6,6 +6,7 @@ const upload = multer({ dest: './uploads/' });
 
 router
     .route("/generate-questions")
-        .post(upload.single("syllabusImage"),questionsController.generateQuestions);
+        .post(upload.single("syllabusImage"),questionsController.generateQuestions)
+        .get(questionsController.fetchQuestions);
 
 module.exports = router;
