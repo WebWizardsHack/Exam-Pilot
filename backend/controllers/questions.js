@@ -7,9 +7,15 @@ module.exports.generateQuestions = async (req, res) => {
         const timeAllotted = req.body.timeAllotted;
         const scheduledTime = req.body.scheduledTime;
         const requestId = req.body.requestId;
-        const Name = req.body.Name;
+        const name = req.body.name;
+
+        if(!req.file || !numQuestions || !timeAllotted || !scheduledTime || !requestId || !name){
+            return res.status(500).json({message : "Missing one or more parameters"});
+        }
 
         const imagePath = req.file.path;
+
+        if(!imagePath) return res.status(500).json({message:"Missing syllabus image"});
 
         const generatedQuestionsText = await generateRandomQuestions(imagePath, numQuestions);
         
@@ -67,7 +73,7 @@ module.exports.generateQuestions = async (req, res) => {
         
         const newQuestions = new Questions({
             requestId : requestId,
-            Name : Name,
+            name : name,
             timeAllotted: timeAllotted,
             scheduledTime: scheduledTime,
             questions: questionArray,
