@@ -1,13 +1,25 @@
 const mongoose= require("mongoose");
 
 const questionsSchema = new mongoose.Schema({
-    timeAlloted : {
+    Name: {
+        type : String,
+        required : true,
+    },
+    requestId : {
+        type : String,
+        required : true,
+    },
+    timeAllotted : {
         type : Number,
         required : true,
     },
     scheduledTime : {
         type :Date,
         required : true,
+    },
+    numQuestions : {
+        type: Number,
+        required: true,
     },
     questions: [
         {
