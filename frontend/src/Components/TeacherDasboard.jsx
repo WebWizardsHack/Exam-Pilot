@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid'
 import { addquestion, getquestion } from '../Store/ActionCreators/QuestionsActionCreator';
+import { Link } from 'react-router-dom';
 const newId = nanoid()
 export default function TeacherDasboard() {
     let [paper, setpaper] = useState({
-        id: "",
-        questions: "",
-        startingTime: "",
-        allotedTime:""
+        requestId: "",
+        Name:"",
+        numQuestions: "",
+        scheduledTime: "",
+        timeAlloted:""
     })
     const dispatch=useDispatch()
     let question = useSelector((state) => state.QuestionStateData)
@@ -19,7 +21,7 @@ export default function TeacherDasboard() {
         setpaper((old) => {
             return {
                 ...old,
-                id:newId,
+                requestId:newId,
                 [name]:value
             }
         })
@@ -41,7 +43,7 @@ export default function TeacherDasboard() {
                   <div className=' h-full flex justify-center  align-middle m-auto'>
                       <ul className='flex m-auto gap-11'>
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >dashboard</li>
-                          <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >upcoming exams</li>
+                          <Link to={"/upcomming-exam"}><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Leaderboard</li>
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Logout</li>
                       </ul>
@@ -98,20 +100,20 @@ export default function TeacherDasboard() {
                       </div>
                       <form className=' mx-9' onSubmit={setData}>
                           <div className=' my-7 flex'>
-                              <label htmlFor="subject" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Subject:</label>
-                              <input type="text" name="subject" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="subject" onChange={getData} />
+                              <label htmlFor="Name" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Subject:</label>
+                              <input type="text" name="Name" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="Name" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
-                              <label htmlFor="questions" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>questions:</label>
-                              <input type="text" name="questions" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="questions" onChange={getData} />
+                              <label htmlFor="numQuestions" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>questions:</label>
+                              <input type="text" name="numQuestions" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="numQuestions" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
-                              <label htmlFor="startingTime" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Starting Time:</label>
-                              <input type="text" name="startingTime" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="startingTime" onChange={getData} />
+                              <label htmlFor="scheduledTime" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Starting Time:</label>
+                              <input type="text" name="scheduledTime" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="scheduledTime" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
-                              <label htmlFor="allotedTime" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>alloted Time:</label>
-                              <input type="text" name="allotedTime" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="allotedTime" onChange={getData} />
+                              <label htmlFor="timeAlloted" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>alloted Time:</label>
+                              <input type="text" name="timeAlloted" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="timeAlloted" onChange={getData} />
                           </div>
                           <div className='flex gap-40'>
                               {/* <button className=''> Upload Button</button> */}
