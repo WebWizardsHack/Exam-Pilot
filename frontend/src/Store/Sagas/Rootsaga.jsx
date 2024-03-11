@@ -1,4 +1,4 @@
-import { all } from "axios";
+import { all, call } from "redux-saga/effects";
 import { questionSaga } from "./Questionsaga";
 
 

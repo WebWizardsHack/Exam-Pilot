@@ -23,6 +23,7 @@ export async function createquestionApi(data) {
         const response = await axios.post('http://localhost:3001/generate-questions',data);
 
         if (response.status === 200) {
+            console.log(response.data)
                 return response.data
         } else {
             alert('Unexpected status code: ' + response.status);

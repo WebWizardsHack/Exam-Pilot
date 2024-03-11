@@ -1,9 +1,10 @@
+import { put, takeEvery } from "redux-saga/effects"
 import { ADD_QUESTIONS, ADD_QUESTIONS_RED, GET_QUESTIONS, GET_QUESTIONS_RED } from "../Constant"
 import { createquestionApi, getquestionApi } from "../Services"
 
 
 function* createQuestionSaga(action) {
-
+            console.log("saga chala data",action)
     let response = yield createquestionApi(action.payload)
     
     yield put({type:ADD_QUESTIONS_RED,data:response})

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { QuestioReducer } from "./QuestionReducer";
+import { QuestionReducer } from "./QuestionReducer";
 
 export default combineReducers({
-    QuestionStateData:QuestioReducer
+    QuestionStateData:QuestionReducer
 })

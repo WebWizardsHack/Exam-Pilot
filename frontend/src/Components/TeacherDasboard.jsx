@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid'
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 import { addquestion, getquestion } from '../Store/ActionCreators/QuestionsActionCreator';
 import { Link } from 'react-router-dom';
 const newId = nanoid()
@@ -12,8 +14,14 @@ export default function TeacherDasboard() {
         scheduledTime: "",
         timeAlloted:""
     })
+
+    
+        // const scheduledTimeRef = useRef(null);
+
+        
+    
     const dispatch=useDispatch()
-    let question = useSelector((state) => state.QuestionStateData)
+    // let question = useSelector((state) => state.QuestionStateData)
     
     function getData(e) {
         let name = e.target.name
@@ -30,12 +38,13 @@ export default function TeacherDasboard() {
     function setData(e) {
         e.preventDefault()
         dispatch(addquestion(paper))
-        console.log(question)
+        // console.log(question)
     }
 
-    useEffect(() => {
-        dispatch(getquestion())
-    },[])
+    // useEffect(() => {
+    //     dispatch(getquestion())
+    
+    // },[])
   return (
     <>
           <div className=' bg-[url("./public/assets/dasboardBackground.jpeg")] bg-no-repeat bg-cover w-full h-screen'>
@@ -109,7 +118,8 @@ export default function TeacherDasboard() {
                           </div>
                           <div className=' my-7 flex'>
                               <label htmlFor="scheduledTime" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Starting Time:</label>
-                              <input type="text" name="scheduledTime" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="scheduledTime" onChange={getData} />
+                            
+                              <input type='datetime-local' name="scheduledTime"  className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="scheduledTime" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
                               <label htmlFor="timeAlloted" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>alloted Time:</label>

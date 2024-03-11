@@ -2,6 +2,7 @@ import { ADD_QUESTIONS, DELETE_QUESTIONS, GET_QUESTIONS, UPDATE_QUESTIONS } from
 
 
 export function addquestion(data) {
+    console.log("action:",data)
     return (
         {
             type: ADD_QUESTIONS,
@@ -20,8 +21,10 @@ export function getquestion() {
 
 
 export function updatequestion(data) {
+
     return (
         {
+
             type: UPDATE_QUESTIONS,
             payload:data
         }

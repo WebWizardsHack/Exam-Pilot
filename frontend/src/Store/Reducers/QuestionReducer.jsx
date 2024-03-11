@@ -1,9 +1,9 @@
 import { ADD_QUESTIONS_RED, DELETE_QUESTIONS_RED, GET_QUESTIONS_RED, UPDATE_QUESTIONS_RED } from "../Constant";
 
-export function QuestioReducer(state = [], action) {
+export function QuestionReducer(state = [], action) {
     switch (action.type) {
         case ADD_QUESTIONS_RED:
-
+            console.log("reducers chala: ",action)
             state.push(action.data);
             return state; // Use the spread operator to create a new array
         case GET_QUESTIONS_RED:
