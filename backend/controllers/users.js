@@ -37,7 +37,7 @@ module.exports.signUp = async (req,res) =>{
                 return res.status(400).json({ message: 'Error saving the user' });
             }
             else{
-                return res.status(200).json({ message: 'User created successfully' });
+                return res.status(200).json({ message: 'User created successfully',data:registeredUser});
             }
         });
 
@@ -49,8 +49,9 @@ module.exports.signUp = async (req,res) =>{
 }
 
 
-module.exports.login = (req,res) => {
-    return res.status(200).json({ message: 'Login successful!' });
+module.exports.login = async (req, res) => {
+    const user=await User.findOne({username:req.body.username})
+    return res.status(200).json({ message: 'Login successful!',data:user });
 }
 
 module.exports.logout = (req,res) => {

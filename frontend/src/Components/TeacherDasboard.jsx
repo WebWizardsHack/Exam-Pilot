@@ -9,10 +9,11 @@ const newId = nanoid()
 export default function TeacherDasboard() {
     let [paper, setpaper] = useState({
         requestId: "",
-        Name:"",
-        numQuestions: "",
-        scheduledTime: "",
-        timeAlloted:""
+        name:"",
+        numQuestions: 0,
+        scheduledTime:"",
+        timeAlloted: 0,
+        syllabusImage:null
     })
 
     
@@ -21,11 +22,19 @@ export default function TeacherDasboard() {
         
     
     const dispatch=useDispatch()
-    // let question = useSelector((state) => state.QuestionStateData)
+    let question = useSelector((state) => state.QuestionStateData)
     
     function getData(e) {
         let name = e.target.name
-        let value=e.target.value
+
+        let value = e.target.value
+        console.log(value)
+        if (name === "scheduledTime") {
+            value=new Date(e.target.value)
+        }
+        if (name === "timeAlloted" || name === "numQuestions") {
+            value=Number(e.target.value)
+        } 
         setpaper((old) => {
             return {
                 ...old,
@@ -34,17 +43,40 @@ export default function TeacherDasboard() {
             }
         })
     }
-
-    function setData(e) {
-        e.preventDefault()
-        dispatch(addquestion(paper))
-        // console.log(question)
+     
+    function getFile(e){
+        let name = e.target.name
+        
+        let value = e.target.files[0]
+        setpaper((old) => {
+            return {
+                ...old,
+                [name]:value
+            }
+        })
+        // console.log(name,value)
     }
+  
+    function postData(e) {
+        e.preventDefault();
 
-    // useEffect(() => {
-    //     dispatch(getquestion())
+        // const formData = new FormData();
+        // for (const key in paper) {
+        //     formData.append(key, paper[key]);
+        // }
+        // console.log("formData",formData)
+        console.log("paper",paper)
+        dispatch(addquestion(paper));
+        // dispatch(getquestion(formData))
+        console.log(question)
+    }
     
-    // },[])
+    useEffect(() => {
+        
+        if (question.message) {
+            alert(question.message)
+        }
+    },[question.length])
   return (
     <>
           <div className=' bg-[url("./public/assets/dasboardBackground.jpeg")] bg-no-repeat bg-cover w-full h-screen'>
@@ -107,14 +139,14 @@ export default function TeacherDasboard() {
                       <div className=' text-2xl font-bold mb-14'>
                           details for exam :
                       </div>
-                      <form className=' mx-9' onSubmit={setData}>
+                      <form className=' mx-9' onSubmit={postData}  >
                           <div className=' my-7 flex'>
                               <label htmlFor="Name" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Subject:</label>
-                              <input type="text" name="Name" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="Name" onChange={getData} />
+                              <input type="text" name="name" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="Name" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
                               <label htmlFor="numQuestions" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>questions:</label>
-                              <input type="text" name="numQuestions" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="numQuestions" onChange={getData} />
+                              <input type="number" name="numQuestions" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="numQuestions" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
                               <label htmlFor="scheduledTime" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>Starting Time:</label>
@@ -122,8 +154,8 @@ export default function TeacherDasboard() {
                               <input type='datetime-local' name="scheduledTime"  className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="scheduledTime" onChange={getData} />
                           </div>
                           <div className=' my-7 flex'>
-                              <label htmlFor="timeAlloted" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>alloted Time:</label>
-                              <input type="text" name="timeAlloted" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="timeAlloted" onChange={getData} />
+                              <label htmlFor="timeAllotted" className=' bg-gray-300 py-4 px-8 rounded-full mr-16 w-44 text-center block '>allotted Time:</label>
+                              <input type="number" name="timeAllotted" className=' border-b-2 border-white outline-none bg-transparent mx-44 text-white' id="timeAllotted" onChange={getData} />
                           </div>
                           <div className='flex gap-40'>
                               {/* <button className=''> Upload Button</button> */}
@@ -136,7 +168,7 @@ export default function TeacherDasboard() {
             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
             <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
         </div>
-        <input id="dropzone-file" type="file" className="hidden" />
+        <input id="dropzone-file" type="file" className="hidden" name='syllabusImage' onChange={getFile} />
     </label>
                               </div> 
                               <button type="submit" className=' bg-gray-300 rounded-full h-16 w-44  text-center '>Generate</button>

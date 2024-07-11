@@ -9,8 +9,9 @@ function* createQuestionSaga(action) {
     
     yield put({type:ADD_QUESTIONS_RED,data:response})
 }
-function* getquestionSaga() {
-    let response = yield getquestionApi()
+function* getquestionSaga(action) {
+    console.log("saga",action.payload)
+    let response = yield getquestionApi(action.payload)
     yield put({type:GET_QUESTIONS_RED,data:response})
 }
 

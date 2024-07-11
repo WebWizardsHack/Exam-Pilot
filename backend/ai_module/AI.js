@@ -1,5 +1,6 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const Tesseract = require('tesseract.js');
+require('dotenv').config();
 
 async function extractTextFromImage(imagePath) {
     try {
@@ -10,12 +11,12 @@ async function extractTextFromImage(imagePath) {
         return null;
     }
 }
+const apiKey=process.env.GEMINI_API_KEY;
+// console.log(apiKey)
 
 async function generateRandomQuestions(syllabusPath, numberOfQuestions) {
     const syllabusText = await extractTextFromImage(syllabusPath);
     const sampleQuestion = "**Q. A sample Question#\n**A. option A#\n**B. option B#\n**C. option C#\n**D. option D#\n**Ans. A/B/C/D#";
-
-    const apiKey=process.env.GEMINI_API_KEY;
 
     const genAI = new GoogleGenerativeAI(apiKey);
     
@@ -31,5 +32,5 @@ async function generateRandomQuestions(syllabusPath, numberOfQuestions) {
         console.error("Error generating questions:", error);
     }
   }
-
+// generateRandomQuestions()
 module.exports = generateRandomQuestions;

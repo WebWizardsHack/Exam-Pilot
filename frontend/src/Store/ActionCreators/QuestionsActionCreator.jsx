@@ -11,13 +11,17 @@ export function addquestion(data) {
     )
 }
 
-export function getquestion() {
+export function getquestion(data) {
+    // console.log(data)
     return (
         {
-            type: GET_QUESTIONS
+            type: GET_QUESTIONS,
+            payload:data
+
         }
     )
 }
+
 
 
 export function updatequestion(data) {

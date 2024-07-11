@@ -25,27 +25,27 @@ const questionsSchema = new mongoose.Schema({
         {
             question :{
                 type: String ,
-                required : true,
+                // required : true,
             },
             optA : {
                 type : String, 
-                required: true,
+                // required: true,
             },
             optB :{
                 type : String, 
-                required: true,
+                // required: true,
             },
             optC :{
                 type : String, 
-                required: true,
+                // required: true,
             },
             optD :{
                 type : String, 
-                required: true,
+                // required: true,
             },
             ans: {
                 type: String,
-                required: true,
+                // required: true,
             }
         }
     ]
