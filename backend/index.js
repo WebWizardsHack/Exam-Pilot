@@ -17,7 +17,6 @@ const examRouter = require("./routes/exams");
 
 const User=require("./models/users");
 
-// const apiKey = process.env.GEMINI_API_KEY; 
 const mongoUrl="mongodb://127.0.0.1:27017/Exam-Pilot";
 
 main().then(()=>{
