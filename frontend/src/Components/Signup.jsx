@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
+import axios from "axios"
 
 export default function Signup() {
-
+    const navigate=useNavigate();
     let [user, setUser] = useState({
         name: "",
         userName: "",
@@ -10,7 +11,7 @@ export default function Signup() {
         contact: "",
        password:"" 
     })
-
+    
     function getdata(e) {
         let name = e.target.name
         let value = e.target.value 
@@ -22,16 +23,27 @@ export default function Signup() {
         })
     }
 
-    function setData(e) {
+    async function setData(e) {
         e.preventDefault()
-        alert(`
-        name:${user.name}
-        username:${user.userName}
-        contact:${user.contact}
-        email:${user.email}
-        password:${user.password}
-        `)
-        navigate("/home")
+        try {
+            const response = await axios.post('http://localhost:3001/signup', user);
+    
+            if (response.status === 200) {
+                alert(response.data.message);
+                navigate('/home');
+            } else {
+                alert('Unexpected status code: ' + response.status);
+            }
+        } catch (error) {
+            console.error('Error signing up:', error);
+            if (error.response) {
+                alert('Error from server: ' + error.response.status + ' - ' + error.response.data.message);
+            } else if (error.request) {
+                alert('No response from the server');
+            } else {
+                alert('Error setting up the request: ' + error.message);
+            }
+        }
     }
   return (
       <>

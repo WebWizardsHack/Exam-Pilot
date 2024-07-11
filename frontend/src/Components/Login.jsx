@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
+import axios from "axios"
+
 export default function Login() {
 
     const navigate=useNavigate()
 
-
-
     let [user, setUser] = useState({
-        email: "",
+       username:"",
        password:"" 
     })
 
@@ -22,15 +22,29 @@ export default function Login() {
         })
     }
 
-    function setData(e) {
-        e.preventDefault()
-        alert(`
-        email:${user.email}
-        password:${user.password}
-        `)
+    async function setData(e) {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3001/login', user);
 
-        navigate("/home")
+            if (response.status === 200) {
+                alert('Login successful!');
+                navigate('/home');
+            } else {
+                alert('Unexpected status code: ' + response.status);
+            }
+        } catch (error) {
+            console.error('Error logging in:', error);
+            if (error.response) {
+                alert('Error from server: ' + error.response.status + ' - ' + error.response.data.message);
+            } else if (error.request) {
+                alert('No response from the server');
+            } else {
+                alert('Error setting up the request: ' + error.message);
+            }
+        }
     }
+
 
   return (
       <>
@@ -42,15 +56,15 @@ export default function Login() {
                   <h1 className=' text-3xl font-bold mt-4'>LOG-IN</h1>
               <form className='px-6' onSubmit={setData} >
                   <div className='flex flex-col mt-4'>
-                      <label htmlFor="email" className=' font-semibold text-lg'>Email</label>
-                      <input required type="text" className=' border-b-2 outline-none px-2 my-2 focus:border-gray-500' name='email' placeholder='Your email id' onChange={getdata} />
+                      <label htmlFor="username" className=' font-semibold text-lg'>Username</label>
+                      <input required type="text" className=' border-b-2 outline-none px-2 my-2 focus:border-gray-500' name='username' placeholder='Your Username' onChange={getdata} />
                   </div>
                   <div className='flex flex-col mt-4'>
                       <label htmlFor="password" className=' font-semibold text-lg'>Password</label>
                       <input required type="password" className=' border-b-2 outline-none px-2 my-2  focus:border-gray-500' name="password" placeholder='password' onChange={getdata} />
                       <h1 className='text-right text-sm'>Forget Password?</h1>
                   </div>
-                      <button className='text-white font-bold bg-cyan-800 w-[100%] mt-6 py-3 rounded-full  '>
+                      <button className='text-white font-bold bg-cyan-800 w-[100%] mt-6 py-3 rounded-full  ' onClick={setData}>
                   
                            Login
                       
