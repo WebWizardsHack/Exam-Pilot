@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios"
+import { getuser } from '../Store/ActionCreators/UserActionCreator';
 
 export default function Login() {
 
     const navigate=useNavigate()
-
+    const dispatch =useDispatch()
     let [user, setUser] = useState({
        username:"",
        password:"" 
     })
-
+    const [detail,setdetails]=useState({})
+    let users=useSelector((state)=>state.UserStateData)
     function getdata(e) {
         let name = e.target.name
         let value = e.target.value 
@@ -21,31 +24,19 @@ export default function Login() {
             }
         })
     }
-
+   
     async function setData(e) {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:3001/login', user);
-
-            if (response.status === 200) {
-                alert('Login successful!');
-                navigate('/home');
-            } else {
-                alert('Unexpected status code: ' + response.status);
-            }
-        } catch (error) {
-            console.error('Error logging in:', error);
-            if (error.response) {
-                alert('Error from server: ' + error.response.status + ' - ' + error.response.data.message);
-            } else if (error.request) {
-                alert('No response from the server');
-            } else {
-                alert('Error setting up the request: ' + error.message);
-            }
+    
+        dispatch(getuser(user))
+        
         }
-    }
-
-
+    useEffect(() => {
+        // setdetails(users[0])
+        console.log(users.length)
+        console.log("users", users)
+        
+},[users])
   return (
       <>
           <div className='w-full h-screen py-4'>

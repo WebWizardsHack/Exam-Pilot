@@ -6,11 +6,11 @@ import google.generativeai as genai
 from IPython.display import Markdown
 import textwrap
 
-dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), './backend/.env')
 load_dotenv(dotenv_path)
 
 apiKey = os.getenv("GEMINI_API_KEY")
-
+print("api"+apiKey)
 genai.configure(api_key=apiKey)
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"

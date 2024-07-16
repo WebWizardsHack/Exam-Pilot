@@ -3,7 +3,7 @@ const Questions = require("../models/questions");
 module.exports.getUpcomingExams = async (req, res) => {
   try {
     const upcomingExamsArray = await Questions.find({});
-    console.log(upcomingExamsArray);
+    // console.log("exams",upcomingExamsArray);
 
     const formattedExams = upcomingExamsArray.map((exam) => ({
         requestId: exam.requestId,

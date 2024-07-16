@@ -1,5 +1,6 @@
 import axios from "axios"
 
+
 /*
 Use this to generate new questions in teacher dashboard , after the teacher clicks on generate button
 
@@ -20,9 +21,15 @@ AI isnt 100% working so 5% cases me error aa skta (rarely) so do try twice while
 */
 export async function createquestionApi(data) {
     try {
-        const response = await axios.post('http://localhost:3001/generate-questions',data);
+        console.log(data,"darta")
+        const response = await axios.post('http://localhost:3001/generate-questions',data ,{
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
 
         if (response.status === 200) {
+            // console.log(response.data)
                 return response.data
         } else {
             alert('Unexpected status code: ' + response.status);
@@ -251,9 +258,14 @@ Render them in a new component in a basic style as you might have seen how it is
 NOTE:AAGEY KA LOGIC BAADME KRTE HAIN ABHI ITNA HANDLE KRO
 */
 export async function getquestionApi(data) {
+    console.log("service",data)
     try {
-        const response = await axios.get('http://localhost:3001/generate-questions',data);
-
+          const response = await axios.get('http://localhost:3001/generate-questions', {
+            params: data, // Pass data as query parameters if necessary
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         if (response.status === 200) {
             return response.data
         } else {
@@ -270,3 +282,52 @@ export async function getquestionApi(data) {
         }
     }
 }
+
+// user api
+
+export async function createuserApi(data) {
+    try {
+        const response = await axios.post('http://localhost:3001/signup', data);
+
+        if (response.status === 200) {
+            alert(response.data.message);
+            
+        } else {
+            alert('Unexpected status code: ' + response.status);
+        }
+    } catch (error) {
+        console.error('Error signing up:', error);
+        if (error.response) {
+            alert('Error from server: ' + error.response.status + ' - ' + error.response.data.message);
+        } else if (error.request) {
+            alert('No response from the server');
+        } else {
+            alert('Error setting up the request: ' + error.message);
+        }
+    }
+}
+
+export async function getuserApi(data) {
+    try {
+        const response = await axios.post('http://localhost:3001/login', data);
+
+        if (response.status === 200) {
+            alert('Login successful!');
+            console.log(response.data.data);
+            return response.data
+        } else {
+            alert('Unexpected status code: ' + response.status);
+        }
+    } catch (error) {
+        console.error('Error logging in:', error);
+        if (error.response) {
+            alert('Error from server: ' + error.response.status + ' - ' + error.response.data.message);
+        } else if (error.request) {
+            alert('No response from the server');
+        } else {
+            alert('Error setting up the request: ' + error.message);
+        }
+    }
+}
+
+

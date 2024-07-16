@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Link , useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { useDispatch } from 'react-redux';
+import { adduser } from '../Store/ActionCreators/UserActionCreator';
 
 export default function Signup() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
     let [user, setUser] = useState({
         name: "",
         userName: "",
@@ -25,25 +28,9 @@ export default function Signup() {
 
     async function setData(e) {
         e.preventDefault()
-        try {
-            const response = await axios.post('http://localhost:3001/signup', user);
-    
-            if (response.status === 200) {
-                alert(response.data.message);
-                navigate('/home');
-            } else {
-                alert('Unexpected status code: ' + response.status);
-            }
-        } catch (error) {
-            console.error('Error signing up:', error);
-            if (error.response) {
-                alert('Error from server: ' + error.response.status + ' - ' + error.response.data.message);
-            } else if (error.request) {
-                alert('No response from the server');
-            } else {
-                alert('Error setting up the request: ' + error.message);
-            }
-        }
+        dispatch(adduser(user))
+        navigate("/home")
+      
     }
   return (
       <>
