@@ -1,7 +1,15 @@
 const mongoose= require("mongoose");
 
 const questionsSchema = new mongoose.Schema({
-    timeAlloted : {
+    Name: {
+        type : String,
+        required : true,
+    },
+    requestId : {
+        type : String,
+        required : true,
+    },
+    timeAllotted : {
         type : Number,
         required : true,
     },
@@ -9,31 +17,35 @@ const questionsSchema = new mongoose.Schema({
         type :Date,
         required : true,
     },
+    numQuestions : {
+        type: Number,
+        required: true,
+    },
     questions: [
         {
             question :{
                 type: String ,
-                required : true,
+                // required : true,
             },
             optA : {
                 type : String, 
-                required: true,
+                // required: true,
             },
             optB :{
                 type : String, 
-                required: true,
+                // required: true,
             },
             optC :{
                 type : String, 
-                required: true,
+                // required: true,
             },
             optD :{
                 type : String, 
-                required: true,
+                // required: true,
             },
             ans: {
                 type: String,
-                required: true,
+                // required: true,
             }
         }
     ]

@@ -3,9 +3,11 @@ const router = express.Router();
 const questionsController = require("../controllers/questions");
 const multer = require("multer");
 const upload = multer({ dest: './uploads/' });
+const {isLoggedIn , validateQuestions} = require ("../middleware");
 
 router
-    .route("/generate-questions")
-        .post(upload.single("syllabusImage"),questionsController.generateQuestions);
+    .route("/")
+        .post(isLoggedIn, validateQuestions , upload.single("syllabusImage"),questionsController.generateQuestions)
+        .get(isLoggedIn , questionsController.fetchQuestions);
 
 module.exports = router;

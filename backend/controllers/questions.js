@@ -4,13 +4,22 @@ const  generateRandomQuestions  = require("../ai_module/AI");
 module.exports.generateQuestions = async (req, res) => {
     try {
         const numQuestions = req.body.numQuestions;
-        const timeAlloted = req.body.timeAlloted;
+        const timeAllotted = req.body.timeAllotted;
         const scheduledTime = req.body.scheduledTime;
+        const requestId = req.body.requestId;
+        const name = req.body.name;
+        const file=req.file
+        console.log(req.body)
+        if(!file || !numQuestions || !timeAllotted || !scheduledTime || !requestId || !name){
+            return res.status(500).json({message : "Missing one or more parameters"});
+        }
 
-        const imagePath = req.file.path;
+        const imagePath =  req.file.path;
+        console.log(imagePath)
+        if(!imagePath) return res.status(500).json({message:"Missing syllabus image"});
 
         const generatedQuestionsText = await generateRandomQuestions(imagePath, numQuestions);
-        
+        console.log(generatedQuestionsText)
         const questionArray = [];
         
         let cnt=1;
@@ -62,13 +71,14 @@ module.exports.generateQuestions = async (req, res) => {
         
             idx++;
         }
-
-        // console.log(questionArray);
         
         const newQuestions = new Questions({
-            timeAlloted: timeAlloted,
+            requestId : requestId,
+            Name : name,
+            timeAllotted: timeAllotted,
             scheduledTime: scheduledTime,
             questions: questionArray,
+            numQuestions: numQuestions,
         });
 
         await newQuestions.save();
@@ -80,3 +90,19 @@ module.exports.generateQuestions = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+module.exports.fetchQuestions = async (req,res) => {
+    try {
+        // console.log("req",req.body)
+        const  requestId  = req.query.requestId;
+        const questions = await Questions.findOne({requestId});
+        if(questions){
+            res.status(200).json({message : "Questions fetched successfully" , questions});
+        }
+        else {
+            res.status(500).json({message:"Error in fetching questions from database with the corresponding request id"});
+        }
+    } catch (error){
+        res.status(500).json({message:"Error in fetching questions" , error});
+    }
+}
