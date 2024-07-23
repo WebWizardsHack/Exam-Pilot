@@ -16,7 +16,7 @@ function App() {
           <Route path='/signup' element={<Signup/> } />
           <Route path='/home' element={<Home/> } />
           <Route path='/teacher-dashboard' element={<TeacherDasboard />} />
-          <Route path='/upcomming-exam' element={<UpcommingExams/> } />
+          <Route path='/upcoming-exam' element={<UpcommingExams/> } />
           <Route path='/exams' element={<Exams/> } />
       </Routes>
       </BrowserRouter>

@@ -10,40 +10,31 @@ export default function UpcommingExams() {
   const [exam, setExam] = useState([]);
 
   const navigate=useNavigate()
-
+  
   let question = useSelector((state) => state.QuestionStateData)
-  function getdata(item) {
-    dispatch(getquestion(item))
-    localStorage.clear()
-      localStorage.setItem("Name", item.Name)
-        localStorage.setItem("numQuestions", item.numQuestions)
-        localStorage.setItem("requestId", item.requestId)
-        localStorage.setItem("scheduledTime", item.scheduledTime)
-          localStorage.setItem("timeAllotted", item.timeAllotted)
-    navigate("/exams")
-    
+  const exams = useSelector((state) => state.ExamStateData);
+
+  const getdata =async (item) => {
+        dispatch(getquestion(item));
+        localStorage.clear();
+        localStorage.setItem("Name", item.Name);
+        localStorage.setItem("numQuestions", item.numQuestions);
+        localStorage.setItem("requestId", item.requestId);
+        localStorage.setItem("scheduledTime", item.scheduledTime);
+        localStorage.setItem("timeAllotted", item.timeAllotted);
+        // navigate("/exams");
   }
 
-  
-// console.log(question)
   useEffect(() => {
-    async function fetchData() {
-      await dispatch(getexam());
-    }
-    
-    fetchData();
-  }, [dispatch]);
-  
-  const exams = useSelector((state) => state.ExamStateData);
-  // console.log("setexam",exam)
-
-  useEffect(() => {
+      dispatch(getexam());
     if (exams.formattedExams) {
       setExam(exams.formattedExams);
     }
     if(question.questions)
     console.log(question.questions.questions)
-  }, [exams.formattedExams,question]);
+  }, [dispatch,exams.formattedExams,question]);
+  
+
   return (
     <>
       <div className=' bg-[url("./public/assets/dasboardBackground.jpeg")] bg-no-repeat bg-cover w-full h-screen overflow-y-auto'>
@@ -51,7 +42,7 @@ export default function UpcommingExams() {
                   <div className=' h-full flex justify-center  align-middle m-auto'>
                       <ul className='flex m-auto gap-11'>
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >dashboard</li>
-                          <Link to={"/upcomming-exam"}><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
+                          <Link to="/upcoming-exam"><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Leaderboard</li>
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Logout</li>
                       </ul>
@@ -67,20 +58,19 @@ export default function UpcommingExams() {
                 return(
                <li key={index} className="flex justify-between gap-x-6 py-5 border-b-2 border-gray-300">
                <div className="flex min-w-0 gap-x-4">
-                 <div className="min-w-0 flex-auto">
+                  <div className="min-w-0 flex-auto">
                      <p className="text-lg font-semibold leading-6 text-gray-900">{ item.Name}</p>
                      <p className="mt-1 truncate text-sm leading-5 text-gray-500 ml-4">start at :{item.scheduledTime} </p>
-                 </div>
-               </div>
-               <div className="hidden shrink-0 sm:flex sm:flex-col justify-start items-center">
-                <button className=' px-8 rounded-md cursor-pointer h-8 text-white bg-slate-500 hover:bg-slate-700' onClick={()=>getdata(item)}> go to exam</button>
-                   <div className='mt-1 truncate text-sm leading-5 text-gray-500 flex gap-2 i '><span> {item.numQuestions} </span> | <span>{ item.timeAllotted} h</span> </div>
+                  </div>
+                  <div className="shrink-0 sm:flex sm:flex-col justify-start items-center">
+                        <div className='mt-1 truncate text-sm leading-5 text-gray-500 flex gap-2 i '><span> {item.numQuestions} </span> | <span>{ item.timeAllotted} h</span> </div>
+                        <button className=' px-8 rounded-md cursor-pointer h-8 text-white bg-slate-500 hover:bg-slate-700' onClick={getdata(item)}> go to exam</button>
+                  </div>
                </div>
                   </li>
                 )
             })}
-</ul>
-
+          </ul>
         </div>
         </div>
       </div>

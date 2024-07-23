@@ -3,14 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getexam } from '../Store/ActionCreators/ExamActionCreator'
 import { getquestion } from '../Store/ActionCreators/QuestionsActionCreator'
-// import { getexamquestion } from '../Store/ActionCreators/QuestionsActionCreator'
 
 export default function Exams() {
     let [question,setQuestion]=useState([])
     let dispatch=useDispatch()
     let questions = useSelector((state) => state.QuestionStateData)
-    
-    // console.log("state",question[0].optA)
     const items = {
         Name: localStorage.getItem("Name"),
         requestId: localStorage.getItem("requestId"),
@@ -19,27 +16,18 @@ export default function Exams() {
         numQuestions: localStorage.getItem("numQuestions")
     };
     async function getdata() {
-        
-        // Fetch data from localStorage
-    
-        
-        // Dispatch action to fetch questions based on localStorage data
         dispatch(getquestion(items));
     }
-    // console.log("question", question)
     useEffect(() => {
         if (questions && questions.questions && questions.questions.questions) {
             console.log("set chla")
             setQuestion(questions.questions.questions)
         }
-        
-    },[items])
-
-    useEffect(() => {
-        
         getdata()
         
-    },[questions.length,items.Name])
+    },[items,questions.length,items.Name])
+
+
    
   return (
     <>
@@ -48,7 +36,7 @@ export default function Exams() {
             <div className=' h-full flex justify-center  align-middle m-auto'>
                 <ul className='flex m-auto gap-11'>
                     <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >dashboard</li>
-                    <Link to={"/upcomming-exam"}><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
+                    <Link to={"/upcoming-exam"}><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
                     <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Leaderboard</li>
                     <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Logout</li>
                 </ul>

@@ -3,13 +3,15 @@ const  generateRandomQuestions  = require("../ai_module/AI");
 
 module.exports.generateQuestions = async (req, res) => {
     try {
+        console.log(req.body);
         const numQuestions = req.body.numQuestions;
         const timeAllotted = req.body.timeAllotted;
         const scheduledTime = req.body.scheduledTime;
         const requestId = req.body.requestId;
         const name = req.body.name;
+        console.log('until here');
         const file=req.file
-        console.log(req.body)
+        console.log('after',file);
         if(!file || !numQuestions || !timeAllotted || !scheduledTime || !requestId || !name){
             return res.status(500).json({message : "Missing one or more parameters"});
         }

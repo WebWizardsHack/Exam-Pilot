@@ -11,9 +11,7 @@ const mongoose=require("mongoose");
 const flash=require("connect-flash");
 const cors=require("cors");
 
-const userRouter = require("./routes/users");
-const questionRouter=require("./routes/questions");
-const examRouter = require("./routes/exams");
+
 
 const User=require("./models/users");
 
@@ -64,9 +62,13 @@ app.use((err, req, res, next) => {
   }
 });
 
+const userRouter = require("./routes/users");
+const questionRouter=require("./routes/questions");
+const examRouter = require("./routes/exams");
+
+app.use("/",userRouter);
 app.use("/upcoming-exams",examRouter);
 app.use("/generate-questions",questionRouter);
-app.use("/",userRouter);
 
 app.get("/",(req,res) => {
   res.send("Hello from the backend!");

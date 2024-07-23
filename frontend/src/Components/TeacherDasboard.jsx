@@ -5,7 +5,10 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { addquestion, getquestion } from '../Store/ActionCreators/QuestionsActionCreator';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 const newId = nanoid()
+
 export default function TeacherDasboard() {
     let [paper, setpaper] = useState({
         requestId: "",
@@ -57,18 +60,23 @@ export default function TeacherDasboard() {
         // console.log(name,value)
     }
   
-    function postData(e) {
-        e.preventDefault();
-
-        // const formData = new FormData();
-        // for (const key in paper) {
-        //     formData.append(key, paper[key]);
-        // }
-        // console.log("formData",formData)
-        console.log("paper",paper)
+    async function postData(e) {
+        try {
+            e.preventDefault();
+        console.log("paper",paper);
+        console.log('sending');
+        const response = await axios.post('http://localhost:3001/generate-questions/',paper,{
+            headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+        });
+        console.log('got response');
+        console.log(response);
         dispatch(addquestion(paper));
-        // dispatch(getquestion(formData))
-        console.log(question)
+        } catch (error) {
+            console.error('error in sending backend request' , error);
+        }
+        
     }
     
     useEffect(() => {
@@ -84,7 +92,7 @@ export default function TeacherDasboard() {
                   <div className=' h-full flex justify-center  align-middle m-auto'>
                       <ul className='flex m-auto gap-11'>
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >dashboard</li>
-                          <Link to={"/upcomming-exam"}><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
+                          <Link to={"/upcoming-exam"}><li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >  upcoming exams </li></Link> 
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Leaderboard</li>
                           <li className=' bg-gray-500 px-2 py-4  rounded-full text-white' >Logout</li>
                       </ul>

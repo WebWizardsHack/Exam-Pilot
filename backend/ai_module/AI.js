@@ -15,6 +15,7 @@ const apiKey=process.env.GEMINI_API_KEY;
 // console.log(apiKey)
 
 async function generateRandomQuestions(syllabusPath, numberOfQuestions) {
+    console.log('in AI');
     const syllabusText = await extractTextFromImage(syllabusPath);
     const sampleQuestion = "**Q. A sample Question#\n**A. option A#\n**B. option B#\n**C. option C#\n**D. option D#\n**Ans. A/B/C/D#";
 
